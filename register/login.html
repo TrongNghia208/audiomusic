@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="../account.css"> -->
+    <link rel="stylesheet" href="./style-register.css" />
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>audio sound</h1>
+
+    <div class="account-box" id="login">
+      <form action="" id="login-form">
+        <h2>Login</h2>
+        <div class="user-box">
+          <input type="text" id="email" placeholder="Email" />
+        </div>
+        <div class="user-box">
+          <input type="password" id="password" placeholder="Password" />
+        </div>
+        <div class="selector">
+          <a href="./signup.html">You haven't account ?</a>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      // login
+
+      const signInForm = document.querySelector("#login-form");
+
+      signInForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const loginEmail = document.getElementById("email").value;
+        const loginPassword = document.getElementById("password").value;
+
+        const listUsers = JSON.parse(localStorage.getItem("users")) || [];
+        const matchedUser = listUsers.find(
+          (user) => user.email === loginEmail && user.password === loginPassword
+        );
+
+        if (matchedUser) {
+          // Store the logged-in user information in localStorage
+          localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+
+          // Redirect to the index page
+          window.location.href = "../index.html";
+        } else {
+          alert("Please check your email and password.");
+        }
+      });
+    </script>
+  </body>
+</html>

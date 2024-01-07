@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style-register.css" />
+    <title>Register</title>
+  </head>
+  <body>
+    <h1>audio sound</h1>
+
+    <div class="account-box" id="register">
+      <form action="">
+        <h2>Register</h2>
+        <div class="user-box">
+          <input type="text" id="name" placeholder="Your Name" />
+        </div>
+        <div class="user-box">
+          <input type="text" id="email" placeholder="Email" />
+        </div>
+        <div class="user-box">
+          <input type="password" id="password" placeholder="Password" />
+        </div>
+        <div class="user-box">
+          <input
+            type="file"
+            id="avatar"
+            placeholder="you avatar"
+            accept="image/*"
+          />
+          <div id="imageContainer"></div>
+        </div>
+        <div class="selector">
+          <a href="./login.html">You have account ?</a>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      const signupForm = document.getElementById("register");
+      const imageInput = document.getElementById("avatar");
+      const fileImage = document.getElementById("imageContainer");
+
+      signupForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const imageinput = document.getElementById("avatar");
+        const fileimage = document.getElementById("imageContainer");
+
+        const reader = new FileReader();
+        console.log(reader);
+
+        const user = {
+          username: username,
+          email: email,
+          password: password,
+          avatar: null, // Placeholder for avatar data
+        };
+
+        if (imageinput.files && imageinput.files[0]) {
+          reader.onload = function (e) {
+            // Set the innerHTML of the fileImage div to include an <img> tag
+            // fileImage.innerHTML = `<img src="${e.target.result}" alt="Avatar Preview" class="avatarPrev">`;
+
+            // Set the base64-encoded image data to the avatar property of the user object
+            user.avatar = e.target.result;
+            console.log(reader.onload);
+            // Now, call the function to register the user
+            registerUser(user);
+          };
+
+          reader.readAsDataURL(imageinput.files[0]);
+        } else {
+          // If no image is selected, reset the fileImage div
+          fileimage.innerHTML = "";
+
+          // Now, call the function to register the user
+          registerUser(user);
+        }
+      });
+
+      // Function to register the user
+      function registerUser(user) {
+        const existUsers = JSON.parse(localStorage.getItem("users")) || [];
+        const userExists = existUsers.some((u) => u.email === user.email);
+
+        if (userExists) {
+          alert("Email is already in use");
+        } else if (user.username.trim() === "") {
+          alert("Please input your name");
+        } else if (user.email.trim() === "") {
+          alert("Please input your email");
+        } else if (user.password.trim() === "") {
+          alert("Please input your password");
+        } else {
+          existUsers.push(user);
+          localStorage.setItem("users", JSON.stringify(existUsers));
+          alert("Registration successful!");
+          window.location.href = "./login.html";
+        }
+      }
+
+      // Additional event listener for the image input to show immediate preview
+      imageInput.addEventListener("change", function () {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          fileImage.innerHTML = `<img src="${e.target.result}" alt="Avatar Preview" class="avatarPrev"> `;
+        };
+
+        if (imageInput.files && imageInput.files[0]) {
+          reader.readAsDataURL(imageInput.files[0]);
+        }
+      });
+    </script>
+  </body>
+</html>

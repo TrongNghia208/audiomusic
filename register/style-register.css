@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-image: url("../img/bgregister.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+h1 {
+  margin-left: 5%;
+}
+
+.account-box {
+  /* filter: blur(5px); */
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  /* -webkit-backdrop-filter: blur(5px); */
+  backdrop-filter: blur(5px);
+  /* filter: blur(5px); */
+  padding: 40px;
+  width: 400px;
+  background-color: rgba(7, 7, 7, 0.738);
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0px 5px 5px 5px rgba(172, 170, 170, 0.774);
+}
+
+h2 {
+  text-align: center;
+}
+
+input {
+  background-color: transparent;
+  padding: 10px 0px;
+  width: 100%;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 2px solid white;
+  outline: none;
+  color: white;
+}
+
+.selector {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 30px;
+  background-color: rgba(7, 7, 7, 0.738);
+  color: white;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.1pc;
+  font-weight: bold;
+  border-radius: 5px;
+  transition-duration: 0.5s;
+}
+
+button:hover {
+  transform: translateY(-0.5em);
+  background: white;
+  color: black;
+  box-shadow: 0px 2px 5px 2px rgb(156, 154, 154);
+}
+
+.avatarPrev {
+  width: 100%;
+  height: auto;
+}

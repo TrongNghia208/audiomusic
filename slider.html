@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        text-align: center;
+      }
+      /* Your existing styles */
+      .slider-container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+
+      .slider {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+      }
+      .hidden {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s, transform 0.5s;
+      }
+
+      .visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-container">
+      <div class="slider">
+        <div class="slide">
+          <img alt="Slide 1" />
+        </div>
+        <div class="slide">
+          <img alt="Slide 2" />
+        </div>
+        <div class="slide">
+          <img alt="Slide 3" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let isDragging = false;
+      let startPositionX;
+      let currentIndex = 0;
+      const slides = document.querySelectorAll(".slide");
+      const totalSlides = slides.length;
+      const slider = document.querySelector(".slider");
+
+      function showSlide(index) {
+        if (index < 0) {
+          currentIndex = totalSlides - 1;
+        } else if (index >= totalSlides) {
+          currentIndex = 0;
+        } else {
+          currentIndex = index;
+        }
+
+        const translateValue = -currentIndex * 100 + "%";
+        slider.style.transform = "translateX(" + translateValue + ")";
+      }
+
+      function startDragging(e) {
+        isDragging = true;
+        startPositionX = e.clientX || e.touches[0].clientX;
+      }
+
+      function stopDragging() {
+        isDragging = false;
+      }
+
+      function handleDragging(e) {
+        if (!isDragging) return;
+
+        const currentPositionX = e.clientX || e.touches[0].clientX;
+        const distance = startPositionX - currentPositionX;
+
+        // You can adjust the sensitivity (e.g., 2) to control how fast the slider moves
+        const sensitivity = 2;
+
+        if (Math.abs(distance) > sensitivity) {
+          if (distance > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+          isDragging = false;
+        }
+      }
+
+      function nextSlide() {
+        showSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        showSlide(currentIndex - 1);
+      }
+
+      document
+        .querySelector(".slider-container")
+        .addEventListener("mousedown", startDragging);
+      document.addEventListener("mouseup", stopDragging);
+      document
+        .querySelector(".slider-container")
+        .addEventListener("mousemove", handleDragging);
+
+      document
+        .querySelector(".slider-container")
+        .addEventListener("touchstart", startDragging);
+      document.addEventListener("touchend", stopDragging);
+      document
+        .querySelector(".slider-container")
+        .addEventListener("touchmove", handleDragging);
+    </script>
+  </body>
+</html>
